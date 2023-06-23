@@ -1,12 +1,36 @@
 version: '3.7'
 
 services:
+
+  frontend:
+    build:
+      context: ./frontend
+    image: react-frontend:1.0.0 
+    ports:
+      - "80:80"
+    networks:
+      - app-net
+    depends_on:
+      - backend
+
   backend:
     build:
       context: ./backend
     image: spring-backend:1.0.0 
     ports:
-      - "8080:8080"
+      - "8080"
+    networks:
+      - app-net
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: board
+    ports:
+      - "3306:3306"
     networks:
       - app-net
       
