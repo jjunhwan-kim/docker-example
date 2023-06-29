@@ -18,6 +18,7 @@ services:
       context: ./backend
     image: spring-backend:1.0.0 
     healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 5s
       timeout: 1s
       retries: 2
