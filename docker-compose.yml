@@ -5,7 +5,8 @@ services:
   frontend:
     build:
       context: ./frontend
-    image: react-frontend:1.0.0 
+    image: react-frontend:1.0.0
+    restart: on-failure
     ports:
       - "80:80"
     networks:
@@ -16,7 +17,8 @@ services:
   backend:
     build:
       context: ./backend
-    image: spring-backend:1.0.0 
+    image: spring-backend:1.0.0
+    restart: on-failure
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 5s
