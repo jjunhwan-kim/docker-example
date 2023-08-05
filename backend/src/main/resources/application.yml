@@ -30,3 +30,14 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+management:
+#  endpoint:
+#    shutdown:
+#      enabled: true # shutdown 엔드포인트 활성화
+
+  endpoints:
+    web:
+      exposure: # env,beans 를 제외한 모든 엔드포인트 노출
+        include: "*"
+#        exclude: "env,beans"

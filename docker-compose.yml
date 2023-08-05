@@ -41,6 +41,24 @@ services:
       - "3306:3306"
     networks:
       - app-net
-      
+
+  prometheus:
+    build:
+      context: ./prometheus
+    image: my-prometheus:1.0.0
+    ports:
+      - "9090:9090"
+    networks:
+      - app-net
+
+  grafana:
+    image: grafana/grafana:10.0.3
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - app-net
+
 networks:
   app-net:
