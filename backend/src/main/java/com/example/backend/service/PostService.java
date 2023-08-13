@@ -7,18 +7,22 @@ import com.example.backend.request.PostUpdateRequest;
 import com.example.backend.response.PostCreateResponse;
 import com.example.backend.response.PostListReadResponse;
 import com.example.backend.response.PostReadResponse;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Timed("my.posts.time")
 @RequiredArgsConstructor
 @Service
 public class PostService {
 
     private final PostRepository postRepository;
 
+    //@Counted("my.posts")
     @Transactional
     public PostCreateResponse createPost(PostCreateRequest request) {
 
@@ -60,8 +64,14 @@ public class PostService {
         post.update(title, content);
     }
 
+    //@Counted("my.posts")
     @Transactional
     public void deletePost(Long id) {
         postRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Long getPostSize() {
+        return postRepository.count();
     }
 }
